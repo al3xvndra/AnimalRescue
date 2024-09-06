@@ -4,65 +4,146 @@ nav {
   background-color: $secondary-color;
   height: 70px;
   position: sticky;
+  display: flex;
   top: 0;
   width: 100%;
   z-index: 10;
   border-bottom: $primary-color solid 1px;
-}
 
-.navBar {
-  max-width: 1240px;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: $secondary-color;
-  margin: 0 auto;
-  padding: 0 5%;
-
-  .logo {
-    background-color: $primary-color;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-
-  ul {
-    overflow: hidden;
-    list-style-type: none;
+  .navBar {
+    width: 1240px;
+    height: 100%;
     display: flex;
-    background-color: $secondary-color;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    width: 40vw;
+    background-color: $secondary-color;
+    margin: 0 auto;
+    padding: 0 5%;
+    background-color: $secondary-color;
 
-    a {
-      font-weight: map-get($font-weights, medium);
-      color: $primary-color;
-      text-decoration: none;
-      font-size: map-get($font-sizes, small);
+    .logo {
+      background-color: $primary-color;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
 
-      &:hover {
-        color: #646cff;
+    .openNav {
+      display: flex;
+
+      ul {
+        overflow: hidden;
+        list-style-type: none;
+        display: flex;
+        background-color: $secondary-color;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 40vw;
+
+        a {
+          font-weight: map-get($font-weights, medium);
+          font-size: map-get($font-sizes, small);
+          color: $primary-color;
+          text-decoration: none;
+
+          &:hover {
+            color: #646cff;
+          }
+        }
+      }
+    }
+
+    .navButtonsOpen {
+      background-color: $secondary-color;
+      button {
+        padding: 0.5rem 2.5rem;
+        text-align: center;
+        margin-left: 4px;
+        text-decoration: none;
+      }
+      #logIn {
+        @include buttonDesign($primary-color, $secondary-color);
+
+        &:hover {
+          background-color: rgb(198, 204, 209);
+        }
+      }
+
+      #signUp {
+        @include buttonDesign($secondary-color, $primary-color);
+        border: 2px solid $primary-color;
+
+        &:hover {
+          background-color: #31393f;
+          border: 2px solid #31393f;
+        }
       }
     }
   }
+}
 
-  .navButtons {
-    background-color: $secondary-color;
-    button {
-      padding: 0.5rem 2.5rem;
-      text-align: center;
-      margin-left: 4px;
-      text-decoration: none;
-    }
-    #logIn {
-      @include buttonDesign($primary-color, $secondary-color);
-    }
+.open {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 80%;
+  height: 100vh;
+  border-right: $primary-color 2px solid;
+  background-color: $secondary-color;
+  @include transition-ease;
 
-    #signUp {
-      @include buttonDesign($secondary-color, $primary-color);
-      border: 3px solid $primary-color;
-    }
+  a {
+    font-weight: map-get($font-weights, medium);
+    font-size: map-get($font-sizes, small);
+    color: $primary-color;
+    text-decoration: none;
+    margin-top: 30px;
+  }
+}
+
+.navButtonsClosed {
+  @extend .navButtonsOpen;
+  margin-top: 30px;
+}
+
+.closed {
+  @extend .open;
+  left: -100%;
+  @include transition-ease;
+}
+
+.hamburger {
+  visibility: hidden;
+  display: block;
+  position: fixed;
+  top: 25px;
+  right: 50px;
+}
+
+@media (max-width: 900px) {
+  .hamburger {
+    visibility: visible;
+  }
+
+  .openNav {
+    width: 0%;
+  }
+
+  .navButtonsOpen {
+    visibility: hidden;
+  }
+
+  .navButtonsClosed {
+    visibility: visible;
+  }
+}
+
+@media (min-width: 900px) {
+  .open {
+    visibility: hidden;
   }
 }

@@ -2,14 +2,14 @@ nav {
   background-color: aliceblue;
   height: 70px;
   position: sticky;
+  display: flex;
   top: 0;
   width: 100%;
   z-index: 10;
   border-bottom: #1b242b solid 1px;
 }
-
-.navBar {
-  max-width: 1240px;
+nav .navBar {
+  width: 1240px;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -17,14 +17,18 @@ nav {
   background-color: aliceblue;
   margin: 0 auto;
   padding: 0 5%;
+  background-color: aliceblue;
 }
-.navBar .logo {
+nav .navBar .logo {
   background-color: #1b242b;
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
-.navBar ul {
+nav .navBar .openNav {
+  display: flex;
+}
+nav .navBar .openNav ul {
   overflow: hidden;
   list-style-type: none;
   display: flex;
@@ -33,30 +37,30 @@ nav {
   align-items: center;
   width: 40vw;
 }
-.navBar ul a {
+nav .navBar .openNav ul a {
   font-weight: 500;
+  font-size: 1em;
   color: #1b242b;
   text-decoration: none;
-  font-size: 1em;
 }
-.navBar ul a:hover {
+nav .navBar .openNav ul a:hover {
   color: #646cff;
 }
-.navBar .navButtons {
+nav .navBar .navButtonsOpen, nav .navBar .navButtonsClosed {
   background-color: aliceblue;
 }
-.navBar .navButtons button {
+nav .navBar .navButtonsOpen button, nav .navBar .navButtonsClosed button {
   padding: 0.5rem 2.5rem;
   text-align: center;
   margin-left: 4px;
   text-decoration: none;
 }
-.navBar .navButtons #logIn {
+nav .navBar .navButtonsOpen #logIn, nav .navBar .navButtonsClosed #logIn {
   border: #1b242b 2px solid;
   border-radius: 6px;
   background-color: aliceblue;
 }
-.navBar .navButtons #logIn a {
+nav .navBar .navButtonsOpen #logIn a, nav .navBar .navButtonsClosed #logIn a {
   color: #1b242b;
   font-weight: 500;
   font-size: 1em;
@@ -65,13 +69,16 @@ nav {
   letter-spacing: 0.047em;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
-.navBar .navButtons #signUp {
+nav .navBar .navButtonsOpen #logIn:hover, nav .navBar .navButtonsClosed #logIn:hover {
+  background-color: rgb(198, 204, 209);
+}
+nav .navBar .navButtonsOpen #signUp, nav .navBar .navButtonsClosed #signUp {
   border: aliceblue 2px solid;
   border-radius: 6px;
   background-color: #1b242b;
-  border: 3px solid #1b242b;
+  border: 2px solid #1b242b;
 }
-.navBar .navButtons #signUp a {
+nav .navBar .navButtonsOpen #signUp a, nav .navBar .navButtonsClosed #signUp a {
   color: aliceblue;
   font-weight: 500;
   font-size: 1em;
@@ -80,7 +87,69 @@ nav {
   letter-spacing: 0.047em;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
+nav .navBar .navButtonsOpen #signUp:hover, nav .navBar .navButtonsClosed #signUp:hover {
+  background-color: #31393f;
+  border: 2px solid #31393f;
+}
 
+.open, .closed {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 80%;
+  height: 100vh;
+  border-right: #1b242b 2px solid;
+  background-color: aliceblue;
+  transition: all 0.5s ease-in-out;
+}
+.open a, .closed a {
+  font-weight: 500;
+  font-size: 1em;
+  color: #1b242b;
+  text-decoration: none;
+  margin-top: 30px;
+}
+
+.navButtonsClosed {
+  margin-top: 30px;
+}
+
+.closed {
+  left: -100%;
+  transition: all 0.5s ease-in-out;
+}
+
+.hamburger {
+  visibility: hidden;
+  display: block;
+  position: fixed;
+  top: 25px;
+  right: 50px;
+}
+
+@media (max-width: 900px) {
+  .hamburger {
+    visibility: visible;
+  }
+  .openNav {
+    width: 0%;
+  }
+  .navButtonsOpen, .navButtonsClosed {
+    visibility: hidden;
+  }
+  .navButtonsClosed {
+    visibility: visible;
+  }
+}
+@media (min-width: 900px) {
+  .open, .closed {
+    visibility: hidden;
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -118,4 +187,5 @@ p {
   margin: 4rem auto;
   min-height: 100vh;
   background-color: chartreuse;
+  padding: 0 5%;
 }/*# sourceMappingURL=index.css.map */

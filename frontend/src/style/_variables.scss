@@ -14,6 +14,10 @@ $font-sizes: (
 $primary-color: #1b242b;
 $secondary-color: aliceblue;
 
+@mixin transition-ease {
+  transition: all 0.5s ease-in-out;
+}
+
 @mixin buttonDesign($color1, $color2) {
   border: $color1 2px solid;
   border-radius: 6px;
