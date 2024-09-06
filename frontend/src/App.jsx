@@ -5,6 +5,9 @@ import About from "./pages/About";
 import LostFound from "./pages/LostFound";
 import Layout from "./Layout";
 import Thread from "./pages/Threads";
+import LogIn from "./pages/LogIn";
+import SignUp from "./pages/SignUp";
+import Animal from "./pages/Animal";
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/lostfound" element={<LostFound />} />
           <Route path="/thread" element={<Thread />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/animal" element={<Animal />} />
         </Route>
       </Routes>
     </Router>

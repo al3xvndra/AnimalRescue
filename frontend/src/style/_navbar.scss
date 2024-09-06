@@ -1,0 +1,68 @@
+@import "./variables";
+
+nav {
+  background-color: $secondary-color;
+  height: 70px;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  border-bottom: $primary-color solid 1px;
+}
+
+.navBar {
+  max-width: 1240px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $secondary-color;
+  margin: 0 auto;
+  padding: 0 5%;
+
+  .logo {
+    background-color: $primary-color;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  ul {
+    overflow: hidden;
+    list-style-type: none;
+    display: flex;
+    background-color: $secondary-color;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 40vw;
+
+    a {
+      font-weight: map-get($font-weights, medium);
+      color: $primary-color;
+      text-decoration: none;
+      font-size: map-get($font-sizes, small);
+
+      &:hover {
+        color: #646cff;
+      }
+    }
+  }
+
+  .navButtons {
+    background-color: $secondary-color;
+    button {
+      padding: 0.5rem 2.5rem;
+      text-align: center;
+      margin-left: 4px;
+      text-decoration: none;
+    }
+    #logIn {
+      @include buttonDesign($primary-color, $secondary-color);
+    }
+
+    #signUp {
+      @include buttonDesign($secondary-color, $primary-color);
+      border: 3px solid $primary-color;
+    }
+  }
+}

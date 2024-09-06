@@ -1,0 +1,121 @@
+nav {
+  background-color: aliceblue;
+  height: 70px;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  border-bottom: #1b242b solid 1px;
+}
+
+.navBar {
+  max-width: 1240px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: aliceblue;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+.navBar .logo {
+  background-color: #1b242b;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.navBar ul {
+  overflow: hidden;
+  list-style-type: none;
+  display: flex;
+  background-color: aliceblue;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 40vw;
+}
+.navBar ul a {
+  font-weight: 500;
+  color: #1b242b;
+  text-decoration: none;
+  font-size: 1em;
+}
+.navBar ul a:hover {
+  color: #646cff;
+}
+.navBar .navButtons {
+  background-color: aliceblue;
+}
+.navBar .navButtons button {
+  padding: 0.5rem 2.5rem;
+  text-align: center;
+  margin-left: 4px;
+  text-decoration: none;
+}
+.navBar .navButtons #logIn {
+  border: #1b242b 2px solid;
+  border-radius: 6px;
+  background-color: aliceblue;
+}
+.navBar .navButtons #logIn a {
+  color: #1b242b;
+  font-weight: 500;
+  font-size: 1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.047em;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+}
+.navBar .navButtons #signUp {
+  border: aliceblue 2px solid;
+  border-radius: 6px;
+  background-color: #1b242b;
+  border: 3px solid #1b242b;
+}
+.navBar .navButtons #signUp a {
+  color: aliceblue;
+  font-weight: 500;
+  font-size: 1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.047em;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #213547;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: cornflowerblue;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2.2em;
+  line-height: 1.1;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+.main {
+  max-width: 1240px;
+  margin: 4rem auto;
+  min-height: 100vh;
+  background-color: chartreuse;
+}/*# sourceMappingURL=index.css.map */

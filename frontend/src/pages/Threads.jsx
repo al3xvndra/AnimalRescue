@@ -2,7 +2,7 @@ import { accounts } from "../../data.js";
 
 const Thread = () => {
   return (
-    <div>
+    <div className="main">
       <h1>Threads Page</h1>
 
       {accounts.length === 0 ? (

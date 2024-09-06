@@ -1,7 +1,7 @@
-const LostFound = () => {
+const SignUp = () => {
   return (
     <div className="main">
-      <h1>Lost and Found Page</h1>
+      <h1>Sign Up Page</h1>
       <h2>welcome</h2>
       <p>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
@@ -13,4 +13,4 @@ const LostFound = () => {
   );
 };
 
-export default LostFound;
+export default SignUp;

@@ -1,0 +1,32 @@
+$font-default: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+$font-weights: (
+  "regular": 400,
+  "medium": 500,
+  "bold": 700,
+);
+$font-sizes: (
+  "small": 1em,
+  "regular": 1.2em,
+  "medium": 2.2em,
+  "large": 3.2em,
+);
+
+$primary-color: #1b242b;
+$secondary-color: aliceblue;
+
+@mixin buttonDesign($color1, $color2) {
+  border: $color1 2px solid;
+  border-radius: 6px;
+  background-color: $color2;
+
+  a {
+    color: $color1;
+    font-weight: map-get($font-weights, medium);
+    font-size: map-get($font-sizes, small);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.047em;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+      "Lucida Sans", Arial, sans-serif;
+  }
+}
