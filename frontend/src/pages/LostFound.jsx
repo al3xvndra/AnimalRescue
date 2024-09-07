@@ -1,14 +1,26 @@
+import { reports } from "../../data.js";
+import { Link } from "react-router-dom";
+
 const LostFound = () => {
   return (
     <div className="main">
       <h1>Lost and Found Page</h1>
       <h2>welcome</h2>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-        cupiditate eum mollitia vero magni quisquam exercitationem. Tempora,
-        delectus eveniet! Nemo corporis modi doloribus at mollitia ab, molestiae
-        minus esse dignissimos!
-      </p>
+      {reports.length === 0 ? (
+        <p>There are no accounts.</p>
+      ) : (
+        <div>
+          <p>Here are the accounts:</p>
+          {reports.map((report) => (
+            <Link key={report.id} to={`/reports/${report.id}`}>
+              <p>
+                {report.category}
+                {report.color}
+              </p>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

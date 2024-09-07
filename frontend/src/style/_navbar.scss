@@ -62,6 +62,7 @@ nav {
         text-decoration: none;
       }
       #logIn {
+        border: 2px solid $primary-color;
         @include buttonDesign($primary-color, $secondary-color);
 
         &:hover {
@@ -70,8 +71,8 @@ nav {
       }
 
       #signUp {
-        @include buttonDesign($secondary-color, $primary-color);
         border: 2px solid $primary-color;
+        @include buttonDesign($secondary-color, $primary-color);
 
         &:hover {
           background-color: #31393f;

@@ -19,7 +19,6 @@ $secondary-color: aliceblue;
 }
 
 @mixin buttonDesign($color1, $color2) {
-  border: $color1 2px solid;
   border-radius: 6px;
   background-color: $color2;
 
