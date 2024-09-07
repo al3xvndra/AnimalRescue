@@ -3,12 +3,13 @@ const LogIn = () => {
     <div className="main">
       <h1>Log In Page</h1>
       <h2>welcome</h2>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-        cupiditate eum mollitia vero magni quisquam exercitationem. Tempora,
-        delectus eveniet! Nemo corporis modi doloribus at mollitia ab, molestiae
-        minus esse dignissimos!
-      </p>
+      <div className="form">
+        <form>
+          <input type="text" placeholder="username"></input>
+          <input type="password" placeholder="password"></input>
+          <button type="submit">Log In</button>
+        </form>
+      </div>
     </div>
   );
 };

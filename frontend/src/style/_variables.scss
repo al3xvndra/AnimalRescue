@@ -21,6 +21,8 @@ $secondary-color: aliceblue;
 @mixin buttonDesign($color1, $color2) {
   border-radius: 6px;
   background-color: $color2;
+  padding: 0.5rem 2.5rem;
+  text-align: center;
 
   a {
     color: $color1;
@@ -32,4 +34,36 @@ $secondary-color: aliceblue;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
       "Lucida Sans", Arial, sans-serif;
   }
+}
+
+@mixin buttonForm($color1, $color2) {
+  border-radius: 6px;
+  background-color: $color2;
+  color: $color1;
+  font-weight: map-get($font-weights, medium);
+  font-size: map-get($font-sizes, small);
+  padding: 0.5rem 2.5rem;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.047em;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  border: 2px solid $primary-color;
+  width: fit-content;
+}
+
+@mixin inputForm($color1, $color2) {
+  border-radius: 6px;
+  background-color: $color2;
+  color: $color1;
+  font-weight: map-get($font-weights, medium);
+  font-size: map-get($font-sizes, small);
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  letter-spacing: 0.047em;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  border: 2px solid $primary-color;
+  width: fit-content;
+  margin-bottom: 1rem;
 }

@@ -12,7 +12,7 @@ const LostFound = () => {
         <div>
           <p>Here are the accounts:</p>
           {reports.map((report) => (
-            <Link key={report.id} to={`/reports/${report.id}`}>
+            <Link key={report.id} to={`/report/${report.id}`}>
               <p>
                 {report.category}
                 {report.color}

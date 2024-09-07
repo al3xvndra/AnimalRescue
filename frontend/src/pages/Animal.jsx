@@ -3,7 +3,7 @@ import { reports } from "../../data";
 
 const Animal = () => {
   const { id } = useParams(); // Extract 'id' from the route parameter
-  const animal = reports.find((reports) => reports.id === parseInt(id));
+  const animal = reports.find((report) => report.id === parseInt(id));
 
   if (!animal) {
     return <p>Blogpost not found.</p>;

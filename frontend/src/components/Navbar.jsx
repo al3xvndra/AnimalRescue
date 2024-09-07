@@ -25,7 +25,10 @@ const Navbar = () => {
               <Link to={"/lostfound"}>Lost and Found</Link>
             </li>
             <li>
-              <Link to={"/thread"}>Thread</Link>
+              <Link to={"/thread"}>Threads</Link>
+            </li>
+            <li>
+              <Link to={"/report"}>Report</Link>
             </li>
           </ul>
           <div className="navButtonsOpen">
