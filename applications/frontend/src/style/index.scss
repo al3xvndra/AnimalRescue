@@ -1,4 +1,4 @@
-@import "./style/variables", "./style/navbar", "./style/forms";
+@import "variables", "navbar", "forms";
 
 @function weight($weight-name) {
   @return map-get($font-weights, $weight-name);
