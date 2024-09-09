@@ -50,15 +50,14 @@ nav .navBar .navButtonsOpen, nav .navBar .navButtonsClosed {
   background-color: aliceblue;
 }
 nav .navBar .navButtonsOpen button, nav .navBar .navButtonsClosed button {
-  padding: 0.5rem 2.5rem;
-  text-align: center;
   margin-left: 4px;
-  text-decoration: none;
 }
 nav .navBar .navButtonsOpen #logIn, nav .navBar .navButtonsClosed #logIn {
-  border: #1b242b 2px solid;
+  border: 2px solid #1b242b;
   border-radius: 6px;
   background-color: aliceblue;
+  padding: 0.5rem 2.5rem;
+  text-align: center;
 }
 nav .navBar .navButtonsOpen #logIn a, nav .navBar .navButtonsClosed #logIn a {
   color: #1b242b;
@@ -73,10 +72,11 @@ nav .navBar .navButtonsOpen #logIn:hover, nav .navBar .navButtonsClosed #logIn:h
   background-color: rgb(198, 204, 209);
 }
 nav .navBar .navButtonsOpen #signUp, nav .navBar .navButtonsClosed #signUp {
-  border: aliceblue 2px solid;
+  border: 2px solid #1b242b;
   border-radius: 6px;
   background-color: #1b242b;
-  border: 2px solid #1b242b;
+  padding: 0.5rem 2.5rem;
+  text-align: center;
 }
 nav .navBar .navButtonsOpen #signUp a, nav .navBar .navButtonsClosed #signUp a {
   color: aliceblue;
@@ -150,6 +150,46 @@ nav .navBar .navButtonsOpen #signUp:hover, nav .navBar .navButtonsClosed #signUp
     visibility: hidden;
   }
 }
+form {
+  display: flex;
+  flex-direction: column;
+}
+form input {
+  border-radius: 6px;
+  background-color: aliceblue;
+  color: #1b242b;
+  font-weight: 500;
+  font-size: 1em;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  letter-spacing: 0.047em;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  border: 2px solid #1b242b;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 1rem;
+}
+form button {
+  border-radius: 6px;
+  background-color: aliceblue;
+  color: #1b242b;
+  font-weight: 500;
+  font-size: 1em;
+  padding: 0.5rem 2.5rem;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.047em;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  border: 2px solid #1b242b;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+form button:hover {
+  background-color: #1b242b;
+  border: 2px solid #1b242b;
+  color: aliceblue;
+}
+
 * {
   margin: 0;
   padding: 0;
