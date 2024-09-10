@@ -13,34 +13,39 @@ const pool = mysql.createPool({
   port: 3306,
 });
 
-// An example async function to run your queries
-async function runQueries() {
+// async function runQueries() {
+//   try {
+//     // Create a connection from the pool
+//     const connection = await pool.getConnection();
+
+//     try {
+//       // Query using the connection
+//       const results = await connection.query(
+//         "SELECT * FROM `reports` WHERE color=?",
+//         ["white"]
+//       );
+//       console.log(results);
+//     } finally {
+//       connection.release();
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+// runQueries();
+
+app.get("/reports", async function (request, response) {
   try {
-    // Create a connection from the pool
-    const connection = await pool.getConnection();
+    // Query the database
+    const [reports] = await pool.query("SELECT * FROM reports");
 
-    try {
-      // Query using the connection
-      const [results, fields] = await connection.query(
-        "SELECT * FROM `reports` WHERE `color` = ?",
-        ["brown"]
-      );
-
-      console.log(results); // results contains rows returned by server
-      console.log(fields); // fields contains extra meta data about results, if available
-    } finally {
-      // Always release the connection back to the pool
-      connection.release();
-    }
-  } catch (err) {
-    console.log(err);
+    // Send the result back as JSON
+    response.status(200).json(reports);
+  } catch (error) {
+    console.error("Error executing query:", error);
+    response.status(500).send("Internal Server Error");
   }
-}
-
-// Example usage
-runQueries();
+});
 
 // Start the Express server
-app.listen(8080, () => {
-  console.log("Server running on port 8080");
-});
+app.listen(8080);
