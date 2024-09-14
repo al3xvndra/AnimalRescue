@@ -22,10 +22,10 @@ const Navbar = () => {
               <Link to={"/about"}>About</Link>
             </li>
             <li>
-              <Link to={"/lostfound"}>Lost and Found</Link>
+              <Link to={"/reports"}>Lost and Found</Link>
             </li>
             <li>
-              <Link to={"/thread"}>Threads</Link>
+              <Link to={"/threads"}>Threads</Link>
             </li>
             <li>
               <Link to={"/report"}>Report</Link>

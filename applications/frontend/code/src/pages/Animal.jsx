@@ -1,18 +1,36 @@
 import { useParams } from "react-router-dom";
-import { reports } from "../data";
+import { useState, useEffect } from "react";
 
 const Animal = () => {
-  const { id } = useParams(); // Extract 'id' from the route parameter
-  const animal = reports.find((report) => report.id === parseInt(id));
+  const { id } = useParams();
+  const [animal, setAnimal] = useState(null);
+  const [error, setError] = useState(null);
 
-  if (!animal) {
-    return <p>Blogpost not found.</p>;
-  }
+  useEffect(() => {
+    const fetchAnimal = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/reports/${id}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setAnimal(data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchAnimal();
+  }, [id]);
+
+  if (error) return <p>Error: {error}</p>;
+  if (!animal) return <p>Animal not found.</p>;
 
   return (
     <div className="main">
-      <h1>{animal.category}</h1>
-      <p>{animal.pickup}</p> {/* Assuming content field */}
+      <h1>{animal.animal}</h1>
+      <p>{animal.pickup}</p>
+      <p>{animal.dropoff}</p>
     </div>
   );
 };

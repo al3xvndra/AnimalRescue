@@ -17,9 +17,9 @@ function App() {
         <Route element={<Layout />}>
           <Route exact path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/lostfound" element={<LostFound />} />
-          <Route path="/thread" element={<Threads />} />
-          <Route path="/thread/:id" element={<Thread />} />
+          <Route path="/reports" element={<LostFound />} />
+          <Route path="/threads" element={<Threads />} />
+          <Route path="/threads/:id" element={<Thread />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/animal" element={<Animal />} />
