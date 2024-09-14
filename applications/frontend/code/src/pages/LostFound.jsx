@@ -1,4 +1,4 @@
-import { reports } from "../../data.js";
+import { reports } from "../data.js";
 import { Link } from "react-router-dom";
 
 const LostFound = () => {

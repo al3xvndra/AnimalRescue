@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { threadposts, comments } from "../../data";
+import { threadposts, comments } from "../data";
 
 const Thread = () => {
   const { id } = useParams(); // Extract 'id' from the route parameter

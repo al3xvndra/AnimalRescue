@@ -31,5 +31,18 @@ services:
       - ./backend/package.json:/app/package.json
     command: ["node", "src/app.js", "--watch"]
 
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"    # Expose Vite's default dev server port
+    volumes:
+      - ./frontend/code:/app/code   # Mount the code directory
+      - ./frontend/package.json:/app/package.json   # Mount package.json
+      - ./frontend/package-lock.json:/app/package-lock.json   # Mount package-lock.json
+    command: ["npm", "run", "dev"]  # Start Vite dev server
+    depends_on:
+      - backend  # Wait for the backend to be ready before running the frontend
+
 volumes:
   mysql_data:

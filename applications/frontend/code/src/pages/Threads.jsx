@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { threadposts } from "../../data.js";
+import { threadposts } from "../data.js";
 
 const Thread = () => {
   return (

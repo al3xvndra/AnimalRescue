@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { reports } from "../../data";
+import { reports } from "../data";
 
 const Animal = () => {
   const { id } = useParams(); // Extract 'id' from the route parameter
