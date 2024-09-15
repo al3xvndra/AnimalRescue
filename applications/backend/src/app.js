@@ -5,7 +5,12 @@ require("dotenv").config({ path: __dirname + "/./../../.env" });
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow only your React frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  credentials: true, // Allow credentials like cookies
+}));
+app.use(express.json());
 
 // Create a connection pool to the database
 const pool = mysql.createPool({
@@ -16,8 +21,7 @@ const pool = mysql.createPool({
   port: 3306,
 });
 
-// lost & found page
-
+// Lost & found page
 app.get("/reports", async (req, res) => {
   try {
     const [reports] = await pool.query("SELECT * FROM reports");
@@ -43,7 +47,29 @@ app.get("/reports/:id", async (req, res) => {
   }
 });
 
-// threads page
+// Report form submission
+app.post("/reports", async (req, res) => {
+  const { animal, pickup, dropoff, color, status, authorId, message } = req.body;
+
+  try {
+    // SQL query to insert the form data into the reports table
+    const sqlQuery = `
+      INSERT INTO reports (animal, pickup, dropoff, color, status, authorId, message)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const values = [animal, pickup, dropoff, color, status, authorId, message];
+
+    // Execute the query
+    const [result] = await pool.query(sqlQuery, values);
+
+    // Send back success response
+    res.status(201).json({ message: "Report submitted successfully", reportId: result.insertId });
+  } catch (error) {
+    console.error("Error inserting report:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Threads page
 
 app.get('/threads', async (req, res) => {
   try {
@@ -76,7 +102,6 @@ app.get('/comments', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
 
 // Start the Express server
 app.listen(8080);

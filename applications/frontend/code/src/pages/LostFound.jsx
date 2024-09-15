@@ -23,7 +23,6 @@ const LostFound = () => {
   }, []);
   
   if (error) return <p>Error: {error}</p>;
-  if (!reports) return <p>Animal not found.</p>;
 
   return (
     <div className="main">

@@ -32,7 +32,7 @@ const Thread = () => {
       <h1>Threads Page</h1>
 
       {threads.length === 0 ? (
-        <p>There are no threadposts.</p>
+        <p>There are no threads.</p>
       ) : (
         <div>
           <p>Here are the threadposts:</p>
