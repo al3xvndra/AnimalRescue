@@ -103,5 +103,29 @@ app.get('/comments', async (req, res) => {
   }
 });
 
+app.post("/comments", async (req, res) => {
+  const { threadId, commenterId, commenterName, comment } = req.body;
+
+  if (!comment || !commenterId || !commenterName || !threadId) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    // Insert the comment into the 'comments' table
+    const sqlQuery = `
+      INSERT INTO comments (threadId, commenterId, commenterName, comment)
+      VALUES (?, ?, ?, ?)`;
+    const values = [threadId, commenterId, commenterName, comment];
+
+    const [result] = await pool.query(sqlQuery, values);
+
+    res.status(201).json({ message: "Comment added successfully", commentId: result.insertId });
+  } catch (error) {
+    console.error("Error inserting comment:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
 // Start the Express server
 app.listen(8080);

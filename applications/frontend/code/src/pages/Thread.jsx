@@ -2,7 +2,52 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Thread = () => {
-  const { id } = useParams(); // Extract 'id' from the route parameter
+  const { id } = useParams(); // Extract 'id' from the route parameter (this is the threadId)
+
+  const [formData, setFormData] = useState({
+    comment: '',
+    commenterId: '',
+    commenterName: ''
+  });
+
+  // Handle input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+  
+    try {
+      const commentData = { ...formData, threadId: id }; // Include threadId
+  
+      const response = await fetch('http://localhost:8080/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(commentData),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        alert('Comment submitted successfully');
+        setFormData({ comment: '', commenterId: '' }); // Clear form
+  
+        // Directly add the new comment to the state without re-fetching
+        setThreadComments([...threadComments, { id: result.id, commenterName: formData.commenterName, comment: formData.comment }]);
+      } else {
+        alert('Error: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error submitting the form:', error);
+    }
+  };
+  
+
   const [thread, setThread] = useState(null);
   const [threadComments, setThreadComments] = useState([]);
   const [error, setError] = useState(null);
@@ -11,7 +56,7 @@ const Thread = () => {
     // Fetch the thread details
     const fetchThread = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/threads/${id}`); // Adjust URL if necessary
+        const response = await fetch(`http://localhost:8080/threads/${id}`); // Fetch thread by id
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -25,7 +70,7 @@ const Thread = () => {
     // Fetch comments for the thread
     const fetchComments = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/comments?threadId=${id}`); // Adjust URL if necessary
+        const response = await fetch(`http://localhost:8080/comments?threadId=${id}`); // Fetch comments by threadId
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -67,6 +112,18 @@ const Thread = () => {
       ) : (
         <p>No comments yet.</p>
       )}
+      <form onSubmit={handleSubmit}>
+        <label>Name</label>
+        <input type="text" name="commenterName" placeholder="Name" value={formData.commenterName} onChange={handleChange} required />
+
+        <label>Comment</label>
+        <input type="text" name="comment" placeholder="Comment" value={formData.comment} onChange={handleChange} required />
+
+        <label>Author</label>
+        <input type="number" name="commenterId" placeholder="ID" value={formData.commenterId} onChange={handleChange} required />
+
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 };
