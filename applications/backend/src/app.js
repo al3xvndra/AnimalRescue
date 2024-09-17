@@ -126,6 +126,27 @@ app.post("/comments", async (req, res) => {
   }
 });
 
+app.post("/create-threads", async (req, res) => {
+  const { authorId, title, content } = req.body;
+
+  try {
+    // SQL query to insert the form data into the reports table
+    const sqlQuery = `
+      INSERT INTO threads (authorId, title, content)
+      VALUES (?, ?, ?)`;
+    const values = [authorId, title, content];
+
+    // Execute the query
+    const [result] = await pool.query(sqlQuery, values);
+
+    // Send back success response
+    res.status(201).json({ message: "Thread submitted successfully", reportId: result.insertId });
+  } catch (error) {
+    console.error("Error inserting report:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 
 // Start the Express server
 app.listen(8080);

@@ -21,7 +21,7 @@ const LostFound = () => {
 
     fetchReports();
   }, []);
-  
+
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -34,7 +34,8 @@ const LostFound = () => {
         <div>
           <p>Here are the reports:</p>
           {reports.map((report) => (
-            <Link key={report.id} to={`/report/${report.id}`}>
+            // Pass the report data to the Animal detail page
+            <Link key={report.id} to={`/report/${report.id}`} state={{ report }}>
               <p>
                 {report.status} - {report.animal}
               </p>

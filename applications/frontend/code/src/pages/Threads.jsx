@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Thread = () => {
+const Threads = () => {
   const [threads, setThreads] = useState([]);
   const [error, setError] = useState(null);
 
@@ -9,7 +9,7 @@ const Thread = () => {
     // Fetch data from the backend
     const fetchThreads = async () => {
       try {
-        const response = await fetch("http://localhost:8080/threads"); // Adjust URL if necessary
+        const response = await fetch("http://localhost:8080/threads");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -23,13 +23,12 @@ const Thread = () => {
     fetchThreads();
   }, []);
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="main">
       <h1>Threads Page</h1>
+      <p><a href="/create-threads">Create a thread</a></p>
 
       {threads.length === 0 ? (
         <p>There are no threads.</p>
@@ -37,11 +36,13 @@ const Thread = () => {
         <div>
           <p>Here are the threadposts:</p>
           {threads.map((thread) => (
-            <Link key={thread.id} to={`/threads/${thread.id}`}>
+            <div key={thread.id}>
+              <Link key={thread.id} to={`/threads/${thread.id}`} state={{ thread }}>
               <p>
-                {thread.authorId} - {thread.title}
+                {thread.id} - {thread.title}
               </p>
             </Link>
+            </div>
           ))}
         </div>
       )}
@@ -49,4 +50,4 @@ const Thread = () => {
   );
 };
 
-export default Thread;
+export default Threads;
