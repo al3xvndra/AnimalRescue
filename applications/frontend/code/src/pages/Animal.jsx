@@ -36,6 +36,9 @@ const Animal = () => {
 
   return (
     <div className="main">
+      <form action={`/edit-report/${id}`} method="GET">
+        <button type="submit">Edit</button>
+      </form>
       <h1>{animal.animal}</h1>
       <p>{animal.pickup}</p>
       <p>{animal.dropoff}</p>

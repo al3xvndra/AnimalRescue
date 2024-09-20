@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import LostFound from "./pages/LostFound";
+import EditReport from "./pages/EditReport";
 import Layout from "./Layout";
 import Threads from "./pages/Threads";
 import CreateThreads from "./pages/CreateThreads";
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/reports" element={<LostFound />} />
+          <Route path="/edit-report/:id" element={<EditReport />} />
           <Route path="/threads" element={<Threads />} />
           <Route path="/threads/:id" element={<Thread />} />
           <Route path="/create-threads" element={<CreateThreads />} />

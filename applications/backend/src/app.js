@@ -100,7 +100,8 @@ app.get("/reports/:id", async (req, res) => {
   }
 });
 
-// Report form submission
+// Report create
+
 app.post("/reports", async (req, res) => {
   const { animal, pickup, dropoff, color, animalStatus, authorId, message } = req.body;
 
@@ -127,6 +128,45 @@ app.post("/reports", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+// Report edit 
+
+app.get('/edit-report/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [report] = await pool.query('SELECT * FROM reports WHERE id = ?', [id]);
+    if (!report.length) return res.status(404).json({ message: 'Report not found' });
+    res.status(200).json(report[0]);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching report', error });
+  }
+});
+
+app.post('/edit-report/:id', async (req, res) => {
+  const { id } = req.params;
+  const { animal, pickup, dropoff, color, animalStatus, authorId, message } = req.body;
+
+  const errorMessages = getErrorMessagesForReports(animal, pickup, dropoff, color, animalStatus, authorId, message);
+  if (errorMessages.length > 0) {
+    return res.status(400).json({ errors: errorMessages });
+  }
+
+  try {
+    const [result] = await pool.query(
+      'UPDATE reports SET animal = ?, pickup = ?, dropoff = ?, color = ?, animalStatus = ?, authorId = ?, message = ? WHERE id = ?',
+      [animal, pickup, dropoff, color, animalStatus, authorId, message, id]
+    );
+    
+    if (result.affectedRows === 0) return res.status(404).json({ message: 'Report not found or update failed' });
+
+    const [updatedReport] = await pool.query('SELECT * FROM reports WHERE id = ?', [id]);
+    res.status(200).json(updatedReport[0]);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating report', error });
+  }
+});
+
 
 // Threads page
 
