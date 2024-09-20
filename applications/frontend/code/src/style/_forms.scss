@@ -8,6 +8,15 @@ form {
     @include inputForm($primary-color, $secondary-color);
   }
 
+  input[type="text"]::placeholder {
+    text-align: left;
+  }
+
+  textarea {
+    @include inputForm($primary-color, $secondary-color);
+    resize: none;
+  }
+
   button {
     @include buttonForm($primary-color, $secondary-color);
 

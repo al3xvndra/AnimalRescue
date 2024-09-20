@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql2/promise");
 const cors = require("cors");
 require("dotenv").config({ path: __dirname + "/./../../.env" });
+const minLength = 1;
 
 const app = express();
 
@@ -20,6 +21,58 @@ const pool = mysql.createPool({
   database: "my_database",
   port: 3306,
 });
+
+// Error handling
+function getErrorMessagesForThreads(title, content) {
+  const errorMessages = [];
+
+  if (title.length < minLength) {
+    errorMessages.push("The title field can't be empty.");
+  }
+  if (content.length < minLength) {
+    errorMessages.push("The content field can't be empty.");
+  }
+
+  return errorMessages;
+}
+
+function getErrorMessagesForComments(name, content) {
+  const errorMessages = [];
+
+  if (name.length < minLength) {
+    errorMessages.push("The name field can't be empty.");
+  }
+  if (content.length < minLength) {
+    errorMessages.push("The content field can't be empty.");
+  }
+
+  return errorMessages;
+}
+
+function getErrorMessagesForReports(animal, pickup, dropoff, color, animalStatus, message) {
+  const errorMessages = [];
+
+  if (animal.length < minLength) {
+    errorMessages.push("The animal field can't be empty.");
+  }
+  if (pickup.length < minLength) {
+    errorMessages.push("The pickup field can't be empty.");
+  }
+  if (dropoff.length < minLength) {
+    errorMessages.push("The dropoff field can't be empty.");
+  }
+  if (color.length < minLength) {
+    errorMessages.push("The color field can't be empty.");
+  }
+  if (animalStatus.length < minLength) {
+    errorMessages.push("The status field can't be empty.");
+  }
+  if (message.length < minLength) {
+    errorMessages.push("The message field can't be empty.");
+  }
+
+  return errorMessages;
+}
 
 // Lost & found page
 app.get("/reports", async (req, res) => {
@@ -49,14 +102,20 @@ app.get("/reports/:id", async (req, res) => {
 
 // Report form submission
 app.post("/reports", async (req, res) => {
-  const { animal, pickup, dropoff, color, status, authorId, message } = req.body;
+  const { animal, pickup, dropoff, color, animalStatus, authorId, message } = req.body;
+
+  // Validate input
+  const errorMessages = getErrorMessagesForReports(animal, pickup, dropoff, color, animalStatus, message);
+  if (errorMessages.length > 0) {
+    return res.status(400).json({ errors: errorMessages });
+  }
 
   try {
     // SQL query to insert the form data into the reports table
     const sqlQuery = `
-      INSERT INTO reports (animal, pickup, dropoff, color, status, authorId, message)
+      INSERT INTO reports (animal, pickup, dropoff, color, animalStatus, authorId, message)
       VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const values = [animal, pickup, dropoff, color, status, authorId, message];
+    const values = [animal, pickup, dropoff, color, animalStatus, authorId, message];
 
     // Execute the query
     const [result] = await pool.query(sqlQuery, values);
@@ -106,8 +165,15 @@ app.get('/comments', async (req, res) => {
 app.post("/comments", async (req, res) => {
   const { threadId, commenterId, commenterName, comment } = req.body;
 
-  if (!comment || !commenterId || !commenterName || !threadId) {
-    return res.status(400).json({ message: "All fields are required" });
+  // Validate inputs using the error messages function
+  const errorMessages = getErrorMessagesForComments(commenterName, comment);
+  if (errorMessages.length > 0) {
+    return res.status(400).json({ errors: errorMessages });
+  }
+
+  // Check if all required fields are provided
+  if (!threadId || !commenterId) {
+    return res.status(400).json({ message: "Thread ID and commenter ID are required" });
   }
 
   try {
@@ -126,11 +192,18 @@ app.post("/comments", async (req, res) => {
   }
 });
 
+
 app.post("/create-threads", async (req, res) => {
   const { authorId, title, content } = req.body;
 
+  // Call the error messages function for validation
+  const errorMessages = getErrorMessagesForThreads(title, content);
+  if (errorMessages.length > 0) {
+    return res.status(400).json({ errors: errorMessages });
+  }
+
   try {
-    // SQL query to insert the form data into the reports table
+    // SQL query to insert the form data into the threads table
     const sqlQuery = `
       INSERT INTO threads (authorId, title, content)
       VALUES (?, ?, ?)`;
@@ -142,11 +215,43 @@ app.post("/create-threads", async (req, res) => {
     // Send back success response
     res.status(201).json({ message: "Thread submitted successfully", reportId: result.insertId });
   } catch (error) {
-    console.error("Error inserting report:", error);
+    console.error("Error inserting thread:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
 
-// Start the Express server
+app.get('/edit-threads/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [threads] = await pool.query('SELECT * FROM threads WHERE id = ?', [id]);
+    if (!threads.length) return res.status(404).json({ message: 'Thread not found' });
+    res.status(200).json(threads[0]);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching thread', error });
+  }
+});
+
+app.post('/edit-threads/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  const errorMessages = getErrorMessagesForThreads(title, content);
+  if (errorMessages.length > 0) {
+    return res.status(400).json({ errors: errorMessages });
+  }
+
+  try {
+    const [result] = await pool.query('UPDATE threads SET title = ?, content = ? WHERE id = ?', [title, content, id]);
+    if (result.affectedRows === 0) return res.status(404).json({ message: 'Thread not found or update failed' });
+
+    const [updatedThread] = await pool.query('SELECT * FROM threads WHERE id = ?', [id]);
+    res.status(200).json(updatedThread[0]);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating thread', error });
+  }
+});
+
+
 app.listen(8080);

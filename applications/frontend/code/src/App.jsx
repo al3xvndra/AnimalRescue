@@ -5,6 +5,7 @@ import LostFound from "./pages/LostFound";
 import Layout from "./Layout";
 import Threads from "./pages/Threads";
 import CreateThreads from "./pages/CreateThreads";
+import EditThreads from "./pages/EditThreads";
 import Thread from "./pages/Thread";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
@@ -22,6 +23,7 @@ function App() {
           <Route path="/threads" element={<Threads />} />
           <Route path="/threads/:id" element={<Thread />} />
           <Route path="/create-threads" element={<CreateThreads />} />
+          <Route path="/edit-threads/:id" element={<EditThreads />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/animal" element={<Animal />} />

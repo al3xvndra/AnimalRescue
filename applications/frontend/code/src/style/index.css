@@ -1,9 +1,11 @@
 nav {
   background-color: aliceblue;
   height: 70px;
-  position: sticky;
+  position: fixed;
   display: flex;
   top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   z-index: 10;
   border-bottom: #1b242b solid 1px;
@@ -168,6 +170,27 @@ form input {
   width: fit-content;
   margin-bottom: 1rem;
 }
+form input[type=text]::-moz-placeholder {
+  text-align: left;
+}
+form input[type=text]::placeholder {
+  text-align: left;
+}
+form textarea {
+  border-radius: 6px;
+  background-color: aliceblue;
+  color: #1b242b;
+  font-weight: 500;
+  font-size: 1em;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  letter-spacing: 0.047em;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  border: 2px solid #1b242b;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
 form button {
   border-radius: 6px;
   background-color: aliceblue;
@@ -206,6 +229,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background-color: cornflowerblue;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -224,8 +248,28 @@ p {
 
 .main {
   max-width: 1240px;
-  margin: 4rem auto;
+  margin: 8rem auto 4rem auto;
   min-height: 100vh;
   background-color: chartreuse;
   padding: 0 5%;
+}
+
+.actionButton {
+  border: 2px solid #1b242b;
+  border-radius: 6px;
+  background-color: aliceblue;
+  padding: 0.5rem 2.5rem;
+  text-align: center;
+}
+.actionButton a {
+  color: #1b242b;
+  font-weight: 500;
+  font-size: 1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.047em;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+}
+.actionButton:hover {
+  background-color: rgb(198, 204, 209);
 }/*# sourceMappingURL=index.css.map */

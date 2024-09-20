@@ -28,8 +28,7 @@ const Threads = () => {
   return (
     <div className="main">
       <h1>Threads Page</h1>
-      <p><a href="/create-threads">Create a thread</a></p>
-
+      <button className="actionButton"><Link to={"/create-threads"}>Create a thread</Link></button>
       {threads.length === 0 ? (
         <p>There are no threads.</p>
       ) : (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 const CreateThreads = () => {
   const [formData, setFormData] = useState({
@@ -7,8 +7,8 @@ const CreateThreads = () => {
     title: '',
     content: ''
   });
-
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const [errorMessages, setErrorMessages] = useState([]); 
+  const navigate = useNavigate(); 
 
   // Handle input change
   const handleChange = (e) => {
@@ -32,30 +32,39 @@ const CreateThreads = () => {
       const result = await response.json();
 
       if (response.ok) {
-        alert('Thread posted successfully');
         navigate('/threads'); // Redirect user to /threads page after success
       } else {
-        alert('Error: ' + result.message);
+        setErrorMessages(result.errors || [result.message]); // Set error messages
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
+      setErrorMessages(['An unexpected error occurred.']); // General error message
     }
   };
 
   return (
     <div className="main">
       <h1>Create a thread</h1>
-      <h2>welcome</h2>
+      <h2>Welcome</h2>
+
+      {errorMessages.length > 0 && (
+        <div className="error-messages">
+          {errorMessages.map((error, index) => (
+            <p key={index} className="error">{error}</p>
+          ))}
+        </div>
+      )}
+
       <div className="form">
         <form onSubmit={handleSubmit}>
-          <label>authorId</label>
-          <input type="text" name="authorId" placeholder="authorId" value={formData.authorId} onChange={handleChange} required />
+          <label>Author ID</label>
+          <input type="number" name="authorId" placeholder="Author ID" value={formData.authorId} onChange={handleChange} required />
 
-          <label>title</label>
-          <input type="text" name="title" placeholder="title" value={formData.title} onChange={handleChange} required />
+          <label>Title</label>
+          <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
 
-          <label>thread</label>
-          <input type="text" name="content" placeholder="content" value={formData.content} onChange={handleChange} required />
+          <label>Thread</label>
+          <textarea className="long" name="content" value={formData.content} onChange={handleChange} required />
 
           <button type="submit">Post the Thread</button>
         </form>

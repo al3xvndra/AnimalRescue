@@ -5,7 +5,6 @@ const Thread = () => {
   const { id } = useParams();
   const location = useLocation();
 
-  // Check if thread data was passed from the previous page
   const initialThread = location.state?.thread || null;
 
   const [thread, setThread] = useState(initialThread);
@@ -16,8 +15,8 @@ const Thread = () => {
     commenterName: ''
   });
   const [error, setError] = useState(null);
+  const [errorMessages, setErrorMessages] = useState([]);
 
-  // Fetch thread data if not available from location.state
   useEffect(() => {
     if (!thread) {
       const fetchThread = async () => {
@@ -35,7 +34,6 @@ const Thread = () => {
       fetchThread();
     }
 
-    // Fetch comments for the thread
     const fetchComments = async () => {
       try {
         const response = await fetch(`http://localhost:8080/comments?threadId=${id}`);
@@ -52,19 +50,18 @@ const Thread = () => {
     fetchComments();
   }, [id, thread]);
 
-  // Handle input change for the comment form
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setErrorMessages([]); // Clear comment errors on input change
   };
 
-  // Handle form submission for adding a comment
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
   
     try {
-      const commentData = { ...formData, threadId: id }; // Include threadId with the comment
-  
+      const commentData = { ...formData, threadId: id };
+
       const response = await fetch('http://localhost:8080/comments', {
         method: 'POST',
         headers: {
@@ -72,28 +69,27 @@ const Thread = () => {
         },
         body: JSON.stringify(commentData),
       });
-  
+
       const result = await response.json();
-  
+
       if (response.ok) {
-        // Add the new comment to the existing comments without re-fetching
         setThreadComments([...threadComments, { 
-          id: result.id, 
+          id: result.commentId, 
           commenterName: formData.commenterName, 
           comment: formData.comment 
         }]);
 
-        // Clear the form fields after successful submission
         setFormData({
           comment: '',
           commenterId: '',
           commenterName: ''
         });
       } else {
-        alert('Error: ' + result.message);
+        setErrorMessages(result.errors || [result.message]); // Set comment-related error messages
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
+      setErrorMessages(['An unexpected error occurred while submitting the comment.']); // Set a generic error message
     }
   };
 
@@ -101,14 +97,18 @@ const Thread = () => {
     return <p>Error: {error}</p>;
   }
 
-  if (!thread) {
-    return <p>Loading thread...</p>; // Show loading message if data is not yet available
-  }
-
   return (
     <div className="main">
       <h1>{thread.title}</h1>
       <p>{thread.content}</p>
+
+      <form action={`/edit-threads/${id}`} method="GET">
+        <button type="submit">Edit</button>
+      </form>
+
+      <form>
+        <button type="submit">Delete</button>
+      </form>
 
       <h2>Comments</h2>
       {threadComments.length > 0 ? (
@@ -125,7 +125,15 @@ const Thread = () => {
         <p>No comments yet.</p>
       )}
 
-      {/* Comment submission form */}
+      {/* Display comment-related error messages if any */}
+      {errorMessages.length > 0 && (
+        <div className="error-messages">
+          {errorMessages.map((msg, index) => (
+            <p key={index} className="error">{msg}</p>
+          ))}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <label>Name</label>
         <input 
@@ -138,10 +146,9 @@ const Thread = () => {
         />
 
         <label>Comment</label>
-        <input 
-          type="text" 
+        <textarea 
+          className="long"
           name="comment" 
-          placeholder="Comment" 
           value={formData.comment} 
           onChange={handleChange} 
           required 

@@ -20,6 +20,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background-color: cornflowerblue;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -38,8 +39,17 @@ p {
 
 .main {
   max-width: 1240px;
-  margin: 4rem auto;
+  margin: 8rem auto 4rem auto;
   min-height: 100vh;
   background-color: chartreuse;
   padding: 0 5%;
+}
+
+.actionButton {
+  border: 2px solid $primary-color;
+  @include buttonDesign($primary-color, $secondary-color);
+
+  &:hover {
+    background-color: rgb(198, 204, 209);
+  }
 }

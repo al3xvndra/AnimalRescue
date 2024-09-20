@@ -41,13 +41,16 @@ const Navbar = () => {
           </div>
         </div>
         <div className={nav ? "open" : "closed"}>
-          <Link to={"/"}>Home</Link>
+          <Link to={"/"} onClick={handleNav}>Home</Link>
 
-          <Link to={"/about"}>About</Link>
+          <Link to={"/about"} onClick={handleNav}>About</Link>
 
-          <Link to={"/lostfound"}>Lost and Found</Link>
+          <Link to={"/reports"} onClick={handleNav}>Lost and Found</Link>
 
-          <Link to={"/thread"}>Thread</Link>
+          <Link to={"/threads"} onClick={handleNav}>Threads</Link>
+
+          <Link to={"/report"} onClick={handleNav}>Report</Link>
+            
 
           <div className="navButtonsClosed">
             <button id="logIn">
