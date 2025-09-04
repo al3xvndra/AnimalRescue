@@ -58,15 +58,15 @@ const CreateThreads = () => {
       <div className="form">
         <form onSubmit={handleSubmit}>
           <label>Author ID</label>
-          <input type="number" name="authorId" placeholder="Author ID" value={formData.authorId} onChange={handleChange} required />
+          <input className="textInput" type="number" name="authorId" placeholder="Author ID" value={formData.authorId} onChange={handleChange} required />
 
           <label>Title</label>
-          <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
+          <input type="text" name="title" className='textEdit' placeholder="Title" value={formData.title} onChange={handleChange} required />
 
           <label>Thread</label>
-          <textarea className="long" name="content" value={formData.content} onChange={handleChange} required />
+          <textarea className='textEdit' name="content" value={formData.content} onChange={handleChange} required />
 
-          <button type="submit">Post the Thread</button>
+          <button className='button' type="submit">Post the Thread</button>
         </form>
       </div>
     </div>

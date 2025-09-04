@@ -19,7 +19,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: cornflowerblue;
+  // background-color: cornflowerblue;
   overflow-x: hidden;
 }
 
@@ -41,8 +41,65 @@ p {
   max-width: 1240px;
   margin: 8rem auto 4rem auto;
   min-height: 100vh;
-  background-color: chartreuse;
+  // background-color: chartreuse;
   padding: 0 5%;
+
+  h1{
+    margin-bottom: 20px;
+  }
+
+  h2{
+    margin-bottom: 20px;
+  }
+
+  h4{
+    margin-bottom: 30px;
+    font-size: map-get($font-sizes, regular);
+  }
+
+  .repAnimal{
+    font-family: $font-default;
+    font-weight: map-get($font-weights, regular);
+    color: $primary-color;
+    text-decoration: none;
+    background-color: $secondary-color;
+    margin-bottom: 5px;
+    width: 10vw;
+    padding: 2px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .repAnimal:hover{
+    color: $secondary-color;
+    background-color: $primary-color;
+  }
+
+  .repThread{
+    font-family: $font-default;
+    font-weight: map-get($font-weights, regular);
+    color: $primary-color;
+    text-decoration: none;
+    background-color: $secondary-color;
+    margin-bottom: 5px;
+    width: 30vw;
+    padding: 2px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+  }
+
+  .repThread:hover{
+    color: $secondary-color;
+    background-color: $primary-color;
+  }
+}
+
+.LFAnimals {
+  display: flex;
+  gap: 10vw;
 }
 
 .actionButton {
@@ -52,4 +109,18 @@ p {
   &:hover {
     background-color: rgb(198, 204, 209);
   }
+}
+
+.home-photos {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.home-photos img {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
 }

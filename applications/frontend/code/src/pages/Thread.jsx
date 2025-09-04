@@ -114,26 +114,26 @@ const Thread = () => {
     }
   };
 
-  const handleDeleteComment = async (commentId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this comment?");
-    if (confirmed) {
-      try {
-        const response = await fetch(`http://localhost:8080/comments/${commentId}`, {
-          method: 'POST',
-        });
+  // const handleDeleteComment = async (commentId) => {
+  //   const confirmed = window.confirm("Are you sure you want to delete this comment?");
+  //   if (confirmed) {
+  //     try {
+  //       const response = await fetch(`http://localhost:8080/comments/${commentId}`, {
+  //         method: 'POST',
+  //       });
 
-        if (response.ok) {
-          // Update the comments state to remove the deleted comment
-          setThreadComments(threadComments.filter(comment => comment.id !== commentId));
-        } else {
-          const result = await response.json();
-          alert('Error: ' + result.message);
-        }
-      } catch (error) {
-        console.error('Error deleting comment:', error);
-      }
-    }
-  };
+  //       if (response.ok) {
+  //         // Update the comments state to remove the deleted comment
+  //         setThreadComments(threadComments.filter(comment => comment.id !== commentId));
+  //       } else {
+  //         const result = await response.json();
+  //         alert('Error: ' + result.message);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error deleting comment:', error);
+  //     }
+  //   }
+  // };
 
   if (error) {
     return <p>Error: {error}</p>;
@@ -145,9 +145,9 @@ const Thread = () => {
       <p>{thread.content}</p>
 
       <form action={`/edit-thread/${id}`} method="GET">
-        <button type="submit">Edit</button>
+        <button className="editButton" type="submit">Edit</button>
       </form>
-      <button onClick={handleDelete}>Delete</button>
+      <button className="deleteButton" onClick={handleDelete}>Delete</button>
 
       <h2>Comments</h2>
       {threadComments.length > 0 ? (
@@ -156,7 +156,7 @@ const Thread = () => {
             <li key={comment.id}>
               <p>
                 <strong>{comment.commenterName}</strong>: {comment.comment}
-                <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                {/* <button className="deleteButton" onClick={() => handleDeleteComment(comment.id)}>Delete</button> */}
               </p>
             </li>
           ))}
@@ -174,9 +174,14 @@ const Thread = () => {
         </div>
       )}
 
+      <br></br>
+      <br></br>
+      <h2>Share your comment!</h2>
+
       <form onSubmit={handleSubmit}>
         <label>Name</label>
         <input 
+          className="textInput"
           type="text" 
           name="commenterName" 
           placeholder="Name" 
@@ -187,7 +192,7 @@ const Thread = () => {
 
         <label>Comment</label>
         <textarea 
-          className="long"
+          className="textEdit"
           name="comment" 
           value={formData.comment} 
           onChange={handleChange} 
@@ -196,6 +201,7 @@ const Thread = () => {
 
         <label>Author ID</label>
         <input 
+          className="textInput"
           type="number" 
           name="commenterId" 
           placeholder="ID" 
@@ -204,7 +210,7 @@ const Thread = () => {
           required 
         />
 
-        <button type="submit">Submit</button>
+        <button className="button" type="submit">Submit</button>
       </form>
     </div>
   );

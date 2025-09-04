@@ -28,18 +28,28 @@ const Threads = () => {
   return (
     <div className="main">
       <h1>Threads Page</h1>
+      <h4>Join the conversation! Our community threads are a space to:</h4>
+      <ul>
+        <li>Share updates on lost and found animals.</li>
+        <li>Offer tips for searching or caring for pets in need.</li>
+        <li>Connect with others who care as much about animals as you do.</li>
+        <li>Together, we make a stronger network for pets and their people.</li>
+        </ul>
+        <br></br>
       <button className="actionButton"><Link to={"/create-thread"}>Create a thread</Link></button>
+      <br></br>
       {threads.length === 0 ? (
         <p>There are no threads.</p>
       ) : (
         <div>
           <p>Here are the threadposts:</p>
+          <br></br>
           {threads.map((thread) => (
             <div key={thread.id}>
-              <Link key={thread.id} to={`/thread/${thread.id}`} state={{ thread }}>
-              <p>
-                {thread.id} - {thread.title}
-              </p>
+              <Link key={thread.id} to={`/thread/${thread.id}`} state={{ thread }} className="repThread">
+              
+                {thread.title}
+              
             </Link>
             </div>
           ))}

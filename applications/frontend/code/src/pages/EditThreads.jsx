@@ -58,10 +58,10 @@ const EditThreads = () => {
       {error ? <p>Error loading thread: {error}</p> : (
         <form onSubmit={handleSubmit}>
           <label>Title</label>
-          <input type="text" name="title" placeholder="Enter thread title" value={formData.title} onChange={handleChange} required />
+          <input type="text" name="title" placeholder="Enter thread title" className='textEdit' value={formData.title} onChange={handleChange} required />
           <label>Thread Content</label>
-          <textarea name="content" placeholder="Enter thread content" value={formData.content} onChange={handleChange} required />
-          <button type="submit">Update the Thread</button>
+          <textarea name="content"  className='textEdit' placeholder="Enter thread content" value={formData.content} onChange={handleChange} required />
+          <button className='button' type="submit">Update the Thread</button>
         </form>
       )}
     </div>

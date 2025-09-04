@@ -1,23 +1,17 @@
+import photo1 from "../assets/dog1.jpeg";
+import photo2 from "../assets/dog2.jpeg";
+import photo3 from "../assets/cat1.jpeg";
+
 const Home = () => {
   return (
     <div className="main">
       <h1>Home Page</h1>
-      <h2>welcome</h2>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-        cupiditate eum mollitia vero magni quisquam exercitationem. Tempora,
-        delectus eveniet! Nemo corporis modi doloribus at mollitia ab, molestiae
-        minus esse dignissimos! Lorem ipsum dolor, sit amet consectetur
-        adipisicing elit. Dignissimos excepturi fugiat beatae similique
-        voluptatem consequatur dolore ipsam architecto vero impedit autem non
-        hic, aperiam ea omnis eos vitae aut incidunt. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Pariatur nihil, provident quasi doloremque
-        vero aperiam reprehenderit iure recusandae nobis nulla veritatis modi
-        magnam laboriosam. Quis modi dolores minima officia illo. Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Ipsum mollitia vitae cumque
-        ea repellendus ad dolorum non doloribus dolores laudantium, sapiente
-        minus quia rerum voluptate nobis! Recusandae enim vel praesentium.
-      </p>
+            <p>Welcome to Animal Rescue, the community hub for reuniting lost pets with their families. Here, you can report a missing animal, share when you’ve found one, and browse reports from others nearby. Together, we can help pets find their way home.</p>
+<div className="home-photos">
+  <img src={photo1} alt="Pet 1" />
+  <img src={photo2} alt="Pet 2" />
+  <img src={photo3} alt="Pet 3" />
+</div>
     </div>
   );
 };

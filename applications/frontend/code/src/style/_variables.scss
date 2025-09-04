@@ -28,7 +28,7 @@ $secondary-color: aliceblue;
     color: $color1;
     font-weight: map-get($font-weights, medium);
     font-size: map-get($font-sizes, small);
-    text-decoration: none;
+    text-decoration: none !important;
     text-transform: uppercase;
     letter-spacing: 0.047em;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -64,6 +64,5 @@ $secondary-color: aliceblue;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   border: 2px solid $primary-color;
-  width: fit-content;
   margin-bottom: 1rem;
 }

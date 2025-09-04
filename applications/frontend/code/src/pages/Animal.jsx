@@ -55,19 +55,34 @@ const Animal = () => {
   if (error) return <p>Error: {error}</p>;
   if (!animal) return <p>Animal not found.</p>;
 
-  return (
+  if(animal.animalStatus=="found"){
+    return (
     <div className="main">
+      <h1>{animal.animal}</h1>
+      <h2>{animal.message}</h2>
+      <p>Found at: {animal.pickup}</p>
+      <p>Currently at: {animal.dropoff}</p>
+      <p>Color: {animal.color}</p>
       <form action={`/edit-report/${id}`} method="GET">
-        <button type="submit">Edit</button>
+        <button className="editButton" type="submit">Edit</button>
       </form>
       
-      <button onClick={handleDelete}>Delete Report</button>
-
-      <h1>{animal.animal}</h1>
-      <p>{animal.pickup}</p>
-      <p>{animal.dropoff}</p>
+      <button className="deleteButton" onClick={handleDelete}>Delete Report</button>
     </div>
   );
+  }else{return (
+    <div className="main">
+      <h1>{animal.animal}</h1>
+      <h2>{animal.message}</h2>
+      <p>Lost at: {animal.pickup}</p>
+      <p>Color: {animal.color}</p>
+      <form action={`/edit-report/${id}`} method="GET">
+        <button className="editButton" type="submit">Edit</button>
+      </form>
+      
+      <button className="deleteButton" onClick={handleDelete}>Delete Report</button>
+    </div>
+  );}
 };
 
 export default Animal;

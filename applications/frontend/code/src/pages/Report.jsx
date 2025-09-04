@@ -63,27 +63,53 @@ const Report = () => {
       <div className="form">
         <form onSubmit={handleSubmit}>
           <label>Animal</label>
-          <input type="text" name="animal" placeholder="Animal" value={formData.animal} onChange={handleChange} required />
+          <input className="textInput" type="text" name="animal" placeholder="What type of animal is it?" value={formData.animal} onChange={handleChange} required />
 
-          <label>Pick up</label>
-          <input type="text" name="pickup" placeholder="Pick Up" value={formData.pickup} onChange={handleChange} required />
+          <label>Location</label>
+          <input className="textInput" type="text" name="pickup" placeholder="Where was the animal found/lost?" value={formData.pickup} onChange={handleChange} required />
 
-          <label>Drop off</label>
-          <input type="text" name="dropoff" placeholder="Drop Off" value={formData.dropoff} onChange={handleChange} required />
+          <label>Latest location</label>
+          <input className="textInput" type="text" name="dropoff" placeholder="Where is the animal now?" value={formData.dropoff} onChange={handleChange} required />
 
-          <label>Color</label>
-          <input type="text" name="color" placeholder="Color" value={formData.color} onChange={handleChange} required />
+          <label>Appearance</label>
+          <input className="textInput" type="text" name="color" placeholder="Breed, color, size, etc." value={formData.color} onChange={handleChange} required />
 
           <label>Status</label>
-          <input type="text" name="animalStatus" placeholder="Animal Status" value={formData.animalStatus} onChange={handleChange} required />
+<div className="status-options">
+  <label>
+    <input
+      type="radio"
+      name="animalStatus"
+      value="found"
+      style={{ padding: '5px'}}
+      checked={formData.animalStatus === "found"}
+      onChange={handleChange}
+      required
+    />
+    Found
+  </label>
+
+  <label>
+    <input
+      type="radio"
+      name="animalStatus"
+      value="lost"
+      style={{ marginLeft: '15px', padding: '5px'}}
+      checked={formData.animalStatus === "lost"}
+      onChange={handleChange}
+      required
+    />
+    Lost
+  </label>
+</div>
 
           <label>Author</label>
-          <input type="number" name="authorId" placeholder="Author ID" value={formData.authorId} onChange={handleChange} required />
+          <input className="textInput" type="number" name="authorId" placeholder="Author ID" value={formData.authorId} onChange={handleChange} required />
 
           <label>Message</label>
-          <textarea className="long" name="message" value={formData.message} onChange={handleChange} required />
+          <textarea className="textEdit" name="message" value={formData.message} onChange={handleChange} required />
 
-          <button type="submit">Report</button>
+          <button className="button" type="submit">Report</button>
         </form>
       </div>
     </div>
