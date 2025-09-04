@@ -11,7 +11,7 @@ const EditThreads = () => {
   useEffect(() => {
     const fetchThread = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/edit-threads/${id}`);
+        const response = await fetch(`http://localhost:8080/edit-thread/${id}`);
         if (!response.ok) throw new Error('Failed to fetch thread data');
         setFormData(await response.json());
       } catch (err) {
@@ -28,7 +28,7 @@ const EditThreads = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8080/edit-threads/${id}`, {
+      const response = await fetch(`http://localhost:8080/edit-thread/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -36,7 +36,7 @@ const EditThreads = () => {
 
       const result = await response.json();
       if (response.ok) {
-        navigate('/threads');
+        navigate(`/threads`);
       } else {
         setErrorMessages(result.errors || [result.message]);
       }

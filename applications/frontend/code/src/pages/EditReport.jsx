@@ -36,7 +36,7 @@ const EditReport = () => {
 
       const result = await response.json();
       if (response.ok) {
-        navigate('/reports');
+        navigate(`/report/${id}`);
       } else {
         setErrorMessages(result.errors || [result.message]);
       }

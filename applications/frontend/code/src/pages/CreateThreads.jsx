@@ -21,7 +21,7 @@ const CreateThreads = () => {
     e.preventDefault(); // Prevent default form submission
 
     try {
-      const response = await fetch('http://localhost:8080/create-threads', {
+      const response = await fetch('http://localhost:8080/create-thread', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

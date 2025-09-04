@@ -167,6 +167,20 @@ app.post('/edit-report/:id', async (req, res) => {
   }
 });
 
+app.post('/delete-report/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [result] = await pool.query('DELETE FROM reports WHERE id = ?', [id]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Report not found' });
+    }
+    res.status(200).json({ message: 'Report deleted successfully' });
+  } catch (error) {
+    console.error("Error deleting report:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 // Threads page
 
@@ -179,7 +193,7 @@ app.get('/threads', async (req, res) => {
   }
 });
 
-app.get('/threads/:id', async (req, res) => {
+app.get('/thread/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const [thread] = await pool.query('SELECT * FROM threads WHERE id = ?', [id]);
@@ -191,6 +205,83 @@ app.get('/threads/:id', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+app.post("/create-thread", async (req, res) => {
+  const { authorId, title, content } = req.body;
+
+  // Call the error messages function for validation
+  const errorMessages = getErrorMessagesForThreads(title, content);
+  if (errorMessages.length > 0) {
+    return res.status(400).json({ errors: errorMessages });
+  }
+
+  try {
+    // SQL query to insert the form data into the threads table
+    const sqlQuery = `
+      INSERT INTO threads (authorId, title, content)
+      VALUES (?, ?, ?)`;
+    const values = [authorId, title, content];
+
+    // Execute the query
+    const [result] = await pool.query(sqlQuery, values);
+
+    // Send back success response
+    res.status(201).json({ message: "Thread submitted successfully", reportId: result.insertId });
+  } catch (error) {
+    console.error("Error inserting thread:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+app.get('/edit-thread/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [threads] = await pool.query('SELECT * FROM threads WHERE id = ?', [id]);
+    if (!threads.length) return res.status(404).json({ message: 'Thread not found' });
+    res.status(200).json(threads[0]);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching thread', error });
+  }
+});
+
+app.post('/edit-thread/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  const errorMessages = getErrorMessagesForThreads(title, content);
+  if (errorMessages.length > 0) {
+    return res.status(400).json({ errors: errorMessages });
+  }
+
+  try {
+    const [result] = await pool.query('UPDATE threads SET title = ?, content = ? WHERE id = ?', [title, content, id]);
+    if (result.affectedRows === 0) return res.status(404).json({ message: 'Thread not found or update failed' });
+
+    const [updatedThread] = await pool.query('SELECT * FROM threads WHERE id = ?', [id]);
+    res.status(200).json(updatedThread[0]);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating thread', error });
+  }
+});
+
+app.post('/delete-thread/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [result] = await pool.query('DELETE FROM threads WHERE id = ?', [id]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Thread not found' });
+    }
+    res.status(200).json({ message: 'Thread deleted successfully' });
+  } catch (error) {
+    console.error("Error deleting thread:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+// Comments
 
 app.get('/comments', async (req, res) => {
   const { threadId } = req.query;
@@ -232,66 +323,20 @@ app.post("/comments", async (req, res) => {
   }
 });
 
-
-app.post("/create-threads", async (req, res) => {
-  const { authorId, title, content } = req.body;
-
-  // Call the error messages function for validation
-  const errorMessages = getErrorMessagesForThreads(title, content);
-  if (errorMessages.length > 0) {
-    return res.status(400).json({ errors: errorMessages });
-  }
+app.post('/comments/:commentId', async (req, res) => {
+  const { commentId } = req.params;
 
   try {
-    // SQL query to insert the form data into the threads table
-    const sqlQuery = `
-      INSERT INTO threads (authorId, title, content)
-      VALUES (?, ?, ?)`;
-    const values = [authorId, title, content];
-
-    // Execute the query
-    const [result] = await pool.query(sqlQuery, values);
-
-    // Send back success response
-    res.status(201).json({ message: "Thread submitted successfully", reportId: result.insertId });
+    const [result] = await pool.query('DELETE FROM comments WHERE id = ?', [commentId]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+    res.status(200).json({ message: 'Comment deleted successfully' });
   } catch (error) {
-    console.error("Error inserting thread:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).json({ message: 'Error deleting comment', error });
   }
 });
 
-
-app.get('/edit-threads/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const [threads] = await pool.query('SELECT * FROM threads WHERE id = ?', [id]);
-    if (!threads.length) return res.status(404).json({ message: 'Thread not found' });
-    res.status(200).json(threads[0]);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching thread', error });
-  }
-});
-
-app.post('/edit-threads/:id', async (req, res) => {
-  const { id } = req.params;
-  const { title, content } = req.body;
-
-  const errorMessages = getErrorMessagesForThreads(title, content);
-  if (errorMessages.length > 0) {
-    return res.status(400).json({ errors: errorMessages });
-  }
-
-  try {
-    const [result] = await pool.query('UPDATE threads SET title = ?, content = ? WHERE id = ?', [title, content, id]);
-    if (result.affectedRows === 0) return res.status(404).json({ message: 'Thread not found or update failed' });
-
-    const [updatedThread] = await pool.query('SELECT * FROM threads WHERE id = ?', [id]);
-    res.status(200).json(updatedThread[0]);
-  } catch (error) {
-    res.status(500).json({ message: 'Error updating thread', error });
-  }
-});
 
 
 app.listen(8080);

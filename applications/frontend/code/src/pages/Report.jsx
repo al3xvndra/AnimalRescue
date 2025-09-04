@@ -37,13 +37,13 @@ const Report = () => {
       const result = await response.json();
 
       if (response.ok) {
-        navigate('/reports'); // Redirect to reports page after success
+        navigate('/reports');
       } else {
-        setErrorMessages(result.errors || [result.message]); // Set error messages
+        setErrorMessages(result.errors || [result.message]);
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
-      setErrorMessages(['An unexpected error occurred.']); // Display a generic error
+      setErrorMessages(['An unexpected error occurred.']);
     }
   };
 

@@ -23,12 +23,11 @@ function App() {
           <Route path="/reports" element={<LostFound />} />
           <Route path="/edit-report/:id" element={<EditReport />} />
           <Route path="/threads" element={<Threads />} />
-          <Route path="/threads/:id" element={<Thread />} />
-          <Route path="/create-threads" element={<CreateThreads />} />
-          <Route path="/edit-threads/:id" element={<EditThreads />} />
+          <Route path="/thread/:id" element={<Thread />} />
+          <Route path="/create-thread" element={<CreateThreads />} />
+          <Route path="/edit-thread/:id" element={<EditThreads />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/animal" element={<Animal />} />
           <Route path="/report" element={<Report />} />
           <Route path="/report/:id" element={<Animal />} />
         </Route>

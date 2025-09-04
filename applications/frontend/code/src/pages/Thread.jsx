@@ -1,5 +1,6 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const Thread = () => {
   const { id } = useParams();
@@ -16,12 +17,13 @@ const Thread = () => {
   });
   const [error, setError] = useState(null);
   const [errorMessages, setErrorMessages] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!thread) {
       const fetchThread = async () => {
         try {
-          const response = await fetch(`http://localhost:8080/threads/${id}`);
+          const response = await fetch(`http://localhost:8080/thread/${id}`);
           if (!response.ok) {
             throw new Error("Network response was not ok");
           }
@@ -93,6 +95,46 @@ const Thread = () => {
     }
   };
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm("Are you sure you want to delete this thread?");
+    if (confirmed) {
+      try {
+        const response = await fetch(`http://localhost:8080/delete-thread/${id}`, {
+          method: 'POST',
+        });
+        if (response.ok) {
+          navigate('/threads');
+        } else {
+          const result = await response.json();
+          alert('Error: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error deleting thread:', error);
+      }
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this comment?");
+    if (confirmed) {
+      try {
+        const response = await fetch(`http://localhost:8080/comments/${commentId}`, {
+          method: 'POST',
+        });
+
+        if (response.ok) {
+          // Update the comments state to remove the deleted comment
+          setThreadComments(threadComments.filter(comment => comment.id !== commentId));
+        } else {
+          const result = await response.json();
+          alert('Error: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error deleting comment:', error);
+      }
+    }
+  };
+
   if (error) {
     return <p>Error: {error}</p>;
   }
@@ -102,13 +144,10 @@ const Thread = () => {
       <h1>{thread.title}</h1>
       <p>{thread.content}</p>
 
-      <form action={`/edit-threads/${id}`} method="GET">
+      <form action={`/edit-thread/${id}`} method="GET">
         <button type="submit">Edit</button>
       </form>
-
-      <form>
-        <button type="submit">Delete</button>
-      </form>
+      <button onClick={handleDelete}>Delete</button>
 
       <h2>Comments</h2>
       {threadComments.length > 0 ? (
@@ -117,6 +156,7 @@ const Thread = () => {
             <li key={comment.id}>
               <p>
                 <strong>{comment.commenterName}</strong>: {comment.comment}
+                <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
               </p>
             </li>
           ))}

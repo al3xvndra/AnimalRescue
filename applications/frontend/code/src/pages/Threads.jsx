@@ -28,7 +28,7 @@ const Threads = () => {
   return (
     <div className="main">
       <h1>Threads Page</h1>
-      <button className="actionButton"><Link to={"/create-threads"}>Create a thread</Link></button>
+      <button className="actionButton"><Link to={"/create-thread"}>Create a thread</Link></button>
       {threads.length === 0 ? (
         <p>There are no threads.</p>
       ) : (
@@ -36,7 +36,7 @@ const Threads = () => {
           <p>Here are the threadposts:</p>
           {threads.map((thread) => (
             <div key={thread.id}>
-              <Link key={thread.id} to={`/threads/${thread.id}`} state={{ thread }}>
+              <Link key={thread.id} to={`/thread/${thread.id}`} state={{ thread }}>
               <p>
                 {thread.id} - {thread.title}
               </p>

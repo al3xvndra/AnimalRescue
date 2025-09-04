@@ -1,5 +1,6 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const Animal = () => {
   const { id } = useParams(); // Extract 'id' from the route parameter
@@ -10,6 +11,7 @@ const Animal = () => {
 
   const [animal, setAnimal] = useState(initialAnimal);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   // Fetch animal data only if it's not provided by the location state
   useEffect(() => {
@@ -31,6 +33,25 @@ const Animal = () => {
     }
   }, [id, animal]);
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm("Are you sure you want to delete this report?");
+    if (confirmed) {
+      try {
+        const response = await fetch(`http://localhost:8080/delete-report/${id}`, {
+          method: 'POST',
+        });
+        if (response.ok) {
+          navigate('/reports');
+        } else {
+          const result = await response.json();
+          alert('Error: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error deleting report:', error);
+      }
+    }
+  };
+
   if (error) return <p>Error: {error}</p>;
   if (!animal) return <p>Animal not found.</p>;
 
@@ -39,6 +60,9 @@ const Animal = () => {
       <form action={`/edit-report/${id}`} method="GET">
         <button type="submit">Edit</button>
       </form>
+      
+      <button onClick={handleDelete}>Delete Report</button>
+
       <h1>{animal.animal}</h1>
       <p>{animal.pickup}</p>
       <p>{animal.dropoff}</p>
