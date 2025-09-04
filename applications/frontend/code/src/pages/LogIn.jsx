@@ -2,12 +2,11 @@ const LogIn = () => {
   return (
     <div className="main">
       <h1>Log In Page</h1>
-      <h2>welcome</h2>
       <div className="form">
         <form>
-          <input type="text" placeholder="username"></input>
-          <input type="password" placeholder="password"></input>
-          <button type="submit">Log In</button>
+          <input className="textInput" type="text" placeholder="username"></input>
+          <input className="textInput" type="password" placeholder="password"></input>
+          <button className="button" type="submit">Log In</button>
         </form>
       </div>
     </div>
