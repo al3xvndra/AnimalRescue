@@ -46,9 +46,9 @@ Animal Rescue was built using:
 
 - Database: MySQL
 
-- Development Tools: Vite (or Create React App)
+- Development Tools: Vite
 
-- Packages: cors, mysql2, dotenv, multer (optional for future file uploads)
+- Packages: cors, mysql2, dotenv
 
 ## Security
 
